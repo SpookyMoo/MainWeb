@@ -1,0 +1,51 @@
+.service-up::after { content: '●';  }
+
+.service-down::after { content: '○'; }
+
+h3:is(.service-up, .service-down)::after {
+	font-size: 1rem;
+	margin-right: -.9rem;
+	vertical-align: text-top;
+	padding-left: .2rem; }
+
+.columns {
+	column-count: 3;
+	column-fill: balance-all;
+	column-gap: 1rem;
+	column-span: none; }
+
+.columns.figs { column-count: 2; }
+
+.columns > div {
+	display: inline-block;
+	width: 100%; }
+
+.columns h3 { color: var(--primary-color); }
+
+figure figcaption { font-size: .8rem; }
+
+figure.center,
+figure figcaption { text-align: center; }
+
+figure img { width: 100%; }
+
+figure.center img { width: 60%; }
+
+#contacts,
+#donation {
+	text-align: center;
+	width: 100%;
+	word-wrap: break-word; }
+
+:is(#contacts, #donation) :is(a, span) { margin: .3rem; }
+
+#contacts span a { margin: 0; }
+
+.banners {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center; }
+
+@media screen and (max-width: 640px) {
+	.columns,
+	.columns.figs { column-count: 1; } }
