@@ -5,7 +5,7 @@ exports.handler = async function(event, context) {
         const { from_currency, to_currency, amount } = event.queryStringParameters;
 
         // Fetching conversion rates for the base currency (USD, in this case)
-        const apiKey = 99d1cdc125c8f962b92599ffbc8d2921; // Replace with your CoinLayer API key
+        const apiKey = '99d1cdc125c8f962b92599ffbc8d2921'; // Replace with your CoinLayer API key
         const endpoint = `https://api.coinlayer.com/live?access_key=${apiKey}`;
         const response = await fetch(endpoint);
         const data = await response.json();

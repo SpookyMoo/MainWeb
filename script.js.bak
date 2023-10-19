@@ -32,5 +32,3 @@ async function convertCurrency() {
     }
 }
 
-// Attach the convertCurrency function to a button click event
-document.getElementById("convertButton").addEventListener("click", convertCurrency);
