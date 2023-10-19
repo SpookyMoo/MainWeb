@@ -1,24 +1,33 @@
 const fetch = require('node-fetch');
 
-module.exports = async (req, res) => {
-    const { from_currency, to_currency, amount } = req.query;
-    const API_KEY = 'USDBTC';
-    const ENDPOINT = `http://api.coinlayer.com/live?access_key=${API_KEY}`;
-
+exports.handler = async function(event, context) {
     try {
-        const response = await fetch(ENDPOINT);
+        const { from_currency, to_currency, amount } = event.queryStringParameters;
+
+        // Fetching conversion rates without the amount
+        const endpoint = `http://api.coinlayer.com/live?access_key=USDBTC&from=${from_currency}&to=${to_currency}`;
+        const response = await fetch(endpoint);
         const data = await response.json();
-        
-        if (!data || !data.rates) {
-            res.status(400).send({ success: false, error: "Failed to fetch conversion rates." });
-            return;
+
+        if (data.success) {
+            // Calculate the conversion using the fetched rate and the provided amount
+            const rate = data.rates[to_currency];
+            const convertedAmount = amount * rate;
+
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ convertedAmount: convertedAmount.toFixed(2) })
+            };
+        } else {
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ error: "Failed to fetch conversion rates." })
+            };
         }
-
-        const conversionRate = data.rates[to_currency] / data.rates[from_currency];
-        const convertedAmount = amount * conversionRate;
-
-        res.status(200).send({ success: true, amount: convertedAmount.toFixed(2) });
     } catch (error) {
-        res.status(500).send({ success: false, error: error.message });
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: "Server error." })
+        };
     }
 };
