@@ -25,18 +25,28 @@ export default async (req, res) => {
         });
         console.log(`Combined rates:`, combinedRates);
 
-        if (combinedRates[Cash] && combinedRates[toCash]) {
-            const rate_from = combinedRates[Cash];
-            const rate_to = combinedRates[toCash];
-			console.log(`Rate from (${Cash}):`, rate_from);
-			console.log(`Rate to (${toCash}):`, rate_To);
-            const convertedAmount = (amount / rate_from) * rate_to;
-            console.log(`Conversion result: ${convertedAmount}`);
-            res.status(200).json({ convertedAmount: convertedAmount.toFixed(2) });
-        } else {
-            console.log("Error: Currency pair not found in the combined rates");
-            res.status(500).json({ error: "Currency pair not found in the response." });
+        const cryptoCurrencies = cryptoData.map(coin => coin.symbol.toUpperCase());
+
+        let rate_From = combinedRates[Cash];
+        let rate_To = combinedRates[toCash];
+
+        if (!rate_From || !rate_To) {
+            throw new Error("Currency pair not found in the combined rates");
         }
+
+        let convertedAmount;
+        // If both are crypto
+        if (cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
+            // Convert from source crypto to USD and then to target crypto
+            convertedAmount = amount / rate_From * rate_To;
+        } else {
+            // Regular conversion
+            convertedAmount = amount * (rate_To / rate_From);
+        }
+
+        console.log(`Conversion result: ${convertedAmount}`);
+        res.status(200).json({ convertedAmount: convertedAmount.toFixed(2) });
+
     } catch (error) {
         console.log(`Error encountered: ${error.message}`);
         res.status(500).json({ error: "Server error." });
