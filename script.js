@@ -4,9 +4,9 @@ async function convertCurrency() {
     const from_currency = document.getElementById("from_currency").value;
     const to_currency = document.getElementById("to_currency").value;
 
-    // Make an API request to the provided endpoint
+    // Make an API request to the serverless function (convert.js)
     try {
-        const endpoint = `https://api.coinlayer.com/api/live?access_key=99d1cdc125c8f962b92599ffbc8d2921&from_currency=${from_currency}&to_currency=${to_currency}&amount=${amount}`;
+        const endpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${from_currency},${to_currency}&key=${apiKey}`;
         const response = await fetch(endpoint);
         const data = await response.json();
 
