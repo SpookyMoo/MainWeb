@@ -5,17 +5,19 @@ function convertCurrency() {
     const toCurrency = document.getElementById('to_currency').value.toUpperCase();
 
     // Make a request to your serverless function
-    fetch(`/api/convert?from_currency=${fromCurrency}&to_currency=${toCurrency}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.rate) {
-                const convertedAmount = amount * data.rate;
-                document.getElementById('result').innerText = `${amount} ${fromCurrency} is approximately ${convertedAmount.toFixed(2)} ${toCurrency}.`;
-            } else if (data.error) {
-                // Display the error message from the server
-                document.getElementById('result').innerText = `Error: ${data.error}`;
-            } else {
-                document.getElementById('result').innerText = "Unexpected error. Please try again.";
+   fetch(`/api/convert?from_currency=${fromCurrency}&to_currency=${toCurrency}`)
+        .then(response => {
+            // Log the raw response for debugging
+            console.log("Raw response:", response);
+            return response.text();
+        })
+        .then(text => {
+            // Attempt to parse the text as JSON
+            try {
+                const data = JSON.parse(text);
+                // ... [rest of the conversion logic]
+            } catch (error) {
+                console.error("Error parsing JSON:", error, "Raw text:", text);
             }
         })
         .catch(error => {

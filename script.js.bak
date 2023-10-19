@@ -8,11 +8,18 @@ function convertCurrency() {
     fetch(`/api/convert?from_currency=${fromCurrency}&to_currency=${toCurrency}`)
         .then(response => response.json())
         .then(data => {
-            const convertedAmount = amount * data.rate;
-            document.getElementById('result').innerText = `${amount} ${fromCurrency} is approximately ${convertedAmount.toFixed(2)} ${toCurrency}.`;
+            if (data.rate) {
+                const convertedAmount = amount * data.rate;
+                document.getElementById('result').innerText = `${amount} ${fromCurrency} is approximately ${convertedAmount.toFixed(2)} ${toCurrency}.`;
+            } else if (data.error) {
+                // Display the error message from the server
+                document.getElementById('result').innerText = `Error: ${data.error}`;
+            } else {
+                document.getElementById('result').innerText = "Unexpected error. Please try again.";
+            }
         })
         .catch(error => {
-            console.error("Error fetching conversion rate:", error);
-            document.getElementById('result').innerText = "Error converting currency. Please try again.";
+            console.error("Client-side error:", error);
+            document.getElementById('result').innerText = "Client-side error occurred. Please check the console for details.";
         });
 }
