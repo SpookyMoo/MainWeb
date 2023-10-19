@@ -6,7 +6,7 @@ async function convertCurrency() {
 
     // Make an API request to fetch the latest exchange rates
     try {
-        const apiKey = '99d1cdc125c8f962b92599ffbc8d2921'; // Replace with your API key
+        const apiKey = 99d1cdc125c8f962b92599ffbc8d2921; // Replace with your API key
         const response = await fetch(`http://api.coinlayer.com/live?access_key=${apiKey}`);
         const data = await response.json();
 
