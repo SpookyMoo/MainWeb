@@ -4,7 +4,7 @@ async function convertCurrency() {
     const to_currency = document.getElementById("to_currency").value;
     
     // Updated endpoint to match the serverless function
-    const endpoint = `/api/convert?from_currency=${from_currency}&to_currency=${to_currency}&amount=${amount}`;
+    const endpoint = `/api/live?from_currency=${from_currency}&to_currency=${to_currency}&amount=${amount}`;
 
     try {
         const response = await fetch(endpoint);
