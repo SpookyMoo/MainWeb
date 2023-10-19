@@ -1,24 +1,33 @@
 const fetch = require('node-fetch');
 
-exports.default = async (req, res) => {
+exports.handler = async function(event, context) {
     try {
-        const { from_currency, to_currency, amount } = req.query;
+        const { from_currency, to_currency, amount } = event.queryStringParameters;
 
-        // Fetching conversion rates without the amount
+        // Fetching conversion rates for the two currencies of interest
         const endpoint = `http://api.coinlayer.com/live?access_key=${process.env.USDBTC}&from=${from_currency}&to=${to_currency}`;
         const response = await fetch(endpoint);
         const data = await response.json();
 
-        if (data.success) {
+        if (data.success && data.rates && data.rates[to_currency]) {
             // Calculate the conversion using the fetched rate and the provided amount
             const rate = data.rates[to_currency];
             const convertedAmount = amount * rate;
 
-            res.status(200).send({ convertedAmount: convertedAmount.toFixed(2) });
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ convertedAmount: convertedAmount.toFixed(2) })
+            };
         } else {
-            res.status(500).send({ error: "Failed to fetch conversion rates." });
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ error: "Failed to fetch conversion rates." })
+            };
         }
     } catch (error) {
-        res.status(500).send({ error: "Server error." });
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: "Server error." })
+        };
     }
 };
