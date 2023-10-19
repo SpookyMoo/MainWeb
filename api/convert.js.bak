@@ -4,19 +4,18 @@ import fetch from 'node-fetch';
 export default async (req, res) => {
     const { from_currency, to_currency } = req.query;
 
-    const API_ENDPOINT = `http://api.exchangeratesapi.io/v1/`;
-    const API_KEY = process.env.Currency;  // We'll set this up in Vercel's dashboard
+    const API_ENDPOINT = `http://api.coinlayer.com/live?access_key=${process.env.USDBTC}&symbols=${to_currency}&source=${from_currency}`;
 
     try {
-        const response = await fetch(API_ENDPOINT, {
-            headers: {
-                'Authorization': `Bearer ${API_KEY}`
-            }
-        });
+        const response = await fetch(API_ENDPOINT);
         const data = await response.json();
 
-        // Extract and send the conversion result
-        res.status(200).json({ result: data.conversionResult });
+        if (data.success) {
+            const conversionRate = data.rates[to_currency];
+            res.status(200).json({ rate: conversionRate });
+        } else {
+            res.status(500).json({ error: data.error.info });
+        }
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch conversion rate' });
     }
