@@ -15,9 +15,26 @@
 
 <!-- Input fields for currency conversion -->
 <div>
-    <input type="number" id="amount" placeholder="Amount">
-    <input type="text" id="from_currency" placeholder="From Currency (e.g., USD)">
-    <input type="text" id="to_currency" placeholder="To Currency (e.g., BTC)">
+    $ <input type="number" id="amount" placeholder="Amount">
+    
+    <select id="from_currency">
+        <option value="USD">USD</option>
+        <option value="ARS">ARS</option>
+        <option value="IDR">IDR</option>
+        <option value="BTC">BTC</option>
+        <option value="LTC">LTC</option>
+        <option value="XMR">XMR</option>
+    </select>
+
+    <select id="to_currency">
+        <option value="USD">USD</option>
+        <option value="ARS">ARS</option>
+        <option value="IDR">IDR</option>
+        <option value="BTC">BTC</option>
+        <option value="LTC">LTC</option>
+        <option value="XMR">XMR</option>
+    </select>
+    
     <button onclick="convertCurrency()">Convert</button>
 </div>
 
@@ -27,7 +44,7 @@
 </div>
 
 <!-- Include the JavaScript -->
-<script src="script.js"></script>
+<script src="stuff.js"></script>
 <footer><br>
   2023—2023 Moo &lt;<a href="mailto:me@arav.su">me@dreadfultech.com</a>&gt; <a href="https://dreadfultech.com/privacy">Privacy statements</a></footer>
 </body>
