@@ -1,8 +1,8 @@
 // Define a function to perform the currency conversion
 async function convertCurrency() {
     const amount = document.getElementById("amount").value;
-    const Cash = document.getElementById("from_currency").value;
-    const toCash = document.getElementById("to_currency").value;
+    const Cash = document.getElementById("Cash").value;
+    const toCash = document.getElementById("toCash").value;
 
     // Construct the endpoint URL with the provided values
     const endpoint = `https://dreadfultech.com/api/convert?Cash=${Cash}&toCash=${toCash}&amount=${amount}`;
@@ -22,6 +22,3 @@ async function convertCurrency() {
         document.getElementById("result").innerText = `Error: ${error.message}`;
     }
 }
-
-// Attach the convertCurrency function to the "Convert" button
-document.getElementById("convertBtn").addEventListener("click", convertCurrency);
