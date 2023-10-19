@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-
+console.log(req.query)
 export default async (req, res) => {
     try {
         console.log("Function started");
