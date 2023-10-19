@@ -4,20 +4,31 @@ exports.handler = async function(event, context) {
     try {
         const { from_currency, to_currency, amount } = event.queryStringParameters;
 
-        // Fetching conversion rates for the two currencies of interest
-        const endpoint = `http://api.coinlayer.com/live?access_key=${'99d1cdc125c8f962b92599ffbc8d2921'}&from=${from_currency}&to=${to_currency}`;
+        // Fetching conversion rates for the base currency (USD, in this case)
+        const apiKey = '99d1cdc125c8f962b92599ffbc8d2921'; // Replace with your CoinLayer API key
+        const endpoint = `http://api.coinlayer.com/live?access_key=${apiKey}`;
         const response = await fetch(endpoint);
         const data = await response.json();
 
-        if (data.success && data.rates && data.rates[to_currency]) {
-            // Calculate the conversion using the fetched rate and the provided amount
-            const rate = data.rates[to_currency];
-            const convertedAmount = amount * rate;
+        if (data.success && data.rates) {
+            // Check if the desired currencies exist in the response
+            if (data.rates[from_currency] && data.rates[to_currency]) {
+                const rate_from = data.rates[from_currency];
+                const rate_to = data.rates[to_currency];
 
-            return {
-                statusCode: 200,
-                body: JSON.stringify({ convertedAmount: convertedAmount.toFixed(2) })
-            };
+                // Calculate the conversion
+                const convertedAmount = (amount / rate_from) * rate_to;
+
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify({ convertedAmount: convertedAmount.toFixed(2) })
+                };
+            } else {
+                return {
+                    statusCode: 500,
+                    body: JSON.stringify({ error: "Currency pair not found in the response." })
+                };
+            }
         } else {
             return {
                 statusCode: 500,
