@@ -4,15 +4,27 @@ export default async (req, res) => {
     try {
         const { Cash, toCash, amount } = req.query;
 
-        const endpoint = `https://api.exchangerate-api.com/v4/latest/USD`;
-        const response = await fetch(endpoint);
-        const data = await response.json();
+        // Fetch fiat currency rates
+        const fiatEndpoint = `https://api.exchangerate-api.com/v4/latest/USD`;
+        const fiatResponse = await fetch(fiatEndpoint);
+        const fiatData = await fiatResponse.json();
 
-        // Check if the currencies exist in the response
-        if (data.rates && data.rates[Cash] && data.rates[toCash]) {
+        // Fetch cryptocurrency rates
+        const cryptoEndpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`;
+        const cryptoResponse = await fetch(cryptoEndpoint);
+        const cryptoData = await cryptoResponse.json();
+
+        // Combine both sets of rates
+        const combinedRates = { ...fiatData.rates };
+        cryptoData.forEach(coin => {
+            combinedRates[coin.symbol.toUpperCase()] = coin.current_price;
+        });
+
+        // Check if the currencies exist in the combined rates
+        if (combinedRates[Cash] && combinedRates[toCash]) {
             // Extract the rates
-            const rate_from = data.rates[Cash];
-            const rate_to = data.rates[toCash];
+            const rate_from = combinedRates[Cash];
+            const rate_to = combinedRates[toCash];
 
             // Calculate the conversion
             const convertedAmount = (amount / rate_from) * rate_to;
