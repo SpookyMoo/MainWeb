@@ -28,6 +28,8 @@ export default async (req, res) => {
         if (combinedRates[Cash] && combinedRates[toCash]) {
             const rate_from = combinedRates[Cash];
             const rate_to = combinedRates[toCash];
+			console.log(`Rate from (${Cash}):`, rateFrom);
+			console.log(`Rate to (${toCash}):`, rateTo);
             const convertedAmount = (amount / rate_from) * rate_to;
             console.log(`Conversion result: ${convertedAmount}`);
             res.status(200).json({ convertedAmount: convertedAmount.toFixed(2) });
