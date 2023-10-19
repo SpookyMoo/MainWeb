@@ -5,7 +5,7 @@ exports.handler = async function(event, context) {
         const { from_currency, to_currency, amount } = event.queryStringParameters;
 
         // New API key and endpoint
-        const apiKey = 'CG-pdiRXN42KbFSkwxqQyekSDxa';
+        const apiKey = CG-pdiRXN42KbFSkwxqQyekSDxa;
         const endpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${from_currency},${to_currency}&key=${apiKey}`;
 
         const response = await fetch(endpoint);
