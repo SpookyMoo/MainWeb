@@ -2,17 +2,29 @@ const fetch = require('node-fetch');
 
 export default async (req, res) => {
     try {
-        const { from_currency, to_currency, amount } = req.query;
+        const { Cash, toCash, amount } = req.query;
 
-        const apiKey = 'CG-pdiRXN42KbFSkwxqQyekSDxa';
-        const endpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${from_currency},${to_currency}&x_cg_demo_api_key=${apiKey}`;
+        // Fetch fiat currency rates
+        const fiatEndpoint = `https://api.exchangerate-api.com/v4/latest/USD`;
+        const fiatResponse = await fetch(fiatEndpoint);
+        const fiatData = await fiatResponse.json();
 
-        const response = await fetch(endpoint);
-        const data = await response.json();
+        // Fetch cryptocurrency rates
+        const cryptoEndpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`;
+        const cryptoResponse = await fetch(cryptoEndpoint);
+        const cryptoData = await cryptoResponse.json();
 
-        if (data && data.length === 2) {
-            const rate_from = data.find(coin => coin.id === from_currency).current_price;
-            const rate_to = data.find(coin => coin.id === to_currency).current_price;
+        // Combine both sets of rates
+        const combinedRates = { ...fiatData.rates };
+        cryptoData.forEach(coin => {
+            combinedRates[coin.symbol.toUpperCase()] = coin.current_price;
+        });
+
+        // Check if the currencies exist in the combined rates
+        if (combinedRates[Cash] && combinedRates[toCash]) {
+            // Extract the rates
+            const rate_from = combinedRates[Cash];
+            const rate_to = combinedRates[toCash];
 
             // Calculate the conversion
             const convertedAmount = (amount / rate_from) * rate_to;

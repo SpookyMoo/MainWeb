@@ -17,22 +17,16 @@
 <div>
     $ <input type="number" id="amount" placeholder="Amount">
     
-    <select id="from_currency">
-        <option value="USD">USD</option>
-        <option value="ARS">ARS</option>
-        <option value="IDR">IDR</option>
+    <select id="Cash">
         <option value="BTC">BTC</option>
         <option value="LTC">LTC</option>
         <option value="XMR">XMR</option>
     </select>
 
-    <select id="to_currency">
+    <select id="toCash">
         <option value="USD">USD</option>
         <option value="ARS">ARS</option>
         <option value="IDR">IDR</option>
-        <option value="BTC">BTC</option>
-        <option value="LTC">LTC</option>
-        <option value="XMR">XMR</option>
     </select>
     
     <button onclick="convertCurrency()">Convert</button>
@@ -44,7 +38,7 @@
 </div>
 
 <!-- Include the JavaScript -->
-<script src="stuff.js"></script>
+<script src="script.js"></script>
 <footer><br>
   2023—2023 Moo &lt;<a href="mailto:me@arav.su">me@dreadfultech.com</a>&gt; <a href="https://dreadfultech.com/privacy">Privacy statements</a></footer>
 </body>
