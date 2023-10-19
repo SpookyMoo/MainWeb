@@ -21,11 +21,11 @@ export default async (req, res) => {
 
         const combinedRates = { ...fiatData.rates };
         cryptoData.forEach(coin => {
-            combinedRates[coin.symbol.toUpperCase()] = coin.current_price;
+            combinedRates[coin.symbol.toLowerCase()] = coin.current_price;
         });
         console.log(`Combined rates:`, combinedRates);
 
-        const cryptoCurrencies = cryptoData.map(coin => coin.symbol.toUpperCase());
+        const cryptoCurrencies = cryptoData.map(coin => coin.symbol.toLowerCase());
 
         let rate_From = combinedRates[Cash];
         let rate_To = combinedRates[toCash];
