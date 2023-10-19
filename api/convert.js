@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 export default async (req, res) => {
     const { from_currency, to_currency } = req.query;
 
-    const API_ENDPOINT = `http://api.coinlayer.com/live?access_key=${process.env.CURRENCY_API_KEY}`;
+    const API_ENDPOINT = `http://api.coinlayer.com/live?access_key=${process.env.USDBTC}`;
 
     try {
         const response = await fetch(API_ENDPOINT);
