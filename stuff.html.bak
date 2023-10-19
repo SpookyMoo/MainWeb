@@ -18,9 +18,9 @@
     $ <input type="number" id="amount" placeholder="Amount">
     
     <select id="Cash">
-        <option value="BTC">BTC</option>
-        <option value="LTC">LTC</option>
-        <option value="XMR">XMR</option>
+        <option value="USD">USD</option>
+        <option value="ARS">ARS</option>
+        <option value="IDR">IDR</option>
     </select>
 
     <select id="toCash">
