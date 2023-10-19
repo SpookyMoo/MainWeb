@@ -5,7 +5,7 @@ exports.default = async (req, res) => {
         const { from_currency, to_currency, amount } = req.query;
 
         // Fetching conversion rates without the amount
-        const endpoint = `http://api.coinlayer.com/live?access_key=YOUR_API_KEY&from=${from_currency}&to=${to_currency}`;
+        const endpoint = `http://api.coinlayer.com/live?access_key=${process.env.USDBTC}&from=${from_currency}&to=${to_currency}`;
         const response = await fetch(endpoint);
         const data = await response.json();
 

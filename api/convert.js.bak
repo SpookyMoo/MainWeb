@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-module.exports = async (req, res) => {
+exports.default = async (req, res) => {
     try {
         const { from_currency, to_currency, amount } = req.query;
 
