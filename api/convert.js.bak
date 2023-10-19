@@ -1,0 +1,23 @@
+// api/convert.js
+import fetch from 'node-fetch';
+
+export default async (req, res) => {
+    const { from_currency, to_currency } = req.query;
+
+    const API_ENDPOINT = `http://api.exchangeratesapi.io/v1/`;
+    const API_KEY = process.env.Currency;  // We'll set this up in Vercel's dashboard
+
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            headers: {
+                'Authorization': `Bearer ${API_KEY}`
+            }
+        });
+        const data = await response.json();
+
+        // Extract and send the conversion result
+        res.status(200).json({ result: data.conversionResult });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch conversion rate' });
+    }
+};
