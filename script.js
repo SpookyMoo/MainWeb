@@ -6,7 +6,7 @@ async function convertCurrency() {
 
     // Make an API request to the provided endpoint
     try {
-        const endpoint = `http://api.coinlayer.com/api/live?access_key=99d1cdc125c8f962b92599ffbc8d2921&from_currency=${from_currency}&to_currency=${to_currency}&amount=${amount}`;
+        const endpoint = `https://api.coinlayer.com/api/live?access_key=99d1cdc125c8f962b92599ffbc8d2921&from_currency=${from_currency}&to_currency=${to_currency}&amount=${amount}`;
         const response = await fetch(endpoint);
         const data = await response.json();
 

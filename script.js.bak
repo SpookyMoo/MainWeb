@@ -4,31 +4,19 @@ async function convertCurrency() {
     const from_currency = document.getElementById("from_currency").value;
     const to_currency = document.getElementById("to_currency").value;
 
-    // Make an API request to fetch the latest exchange rates
+    // Make an API request to the provided endpoint
     try {
-        const apiKey = '99d1cdc125c8f962b92599ffbc8d2921'; // Replace with your API key
-        const response = await fetch(`https://api.coinlayer.com/live?access_key={apiKey}`);
+        const endpoint = `http://api.coinlayer.com/api/live?access_key=99d1cdc125c8f962b92599ffbc8d2921&from_currency=${from_currency}&to_currency=${to_currency}&amount=${amount}`;
+        const response = await fetch(endpoint);
         const data = await response.json();
 
-        if (data.success && data.rates) {
-            // Check if the desired currencies exist in the response
-            if (data.rates[from_currency] && data.rates[to_currency]) {
-                const rate_from = data.rates[from_currency];
-                const rate_to = data.rates[to_currency];
-
-                // Calculate the conversion
-                const convertedAmount = (amount * rate_to) / rate_from;
-
-                // Display the result
-                document.getElementById("result").innerText = `${amount} ${from_currency} is ${convertedAmount.toFixed(2)} ${to_currency}`;
-            } else {
-                document.getElementById("result").innerText = "Invalid currency selection.";
-            }
+        if (response.ok) {
+            // Display the result
+            document.getElementById("result").innerText = `${amount} ${from_currency} is ${data.convertedAmount} ${to_currency}`;
         } else {
-            document.getElementById("result").innerText = "Failed to fetch exchange rates.";
+            document.getElementById("result").innerText = data.error || "An error occurred.";
         }
     } catch (error) {
         document.getElementById("result").innerText = `Error: ${error.message}`;
     }
 }
-
