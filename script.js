@@ -6,6 +6,7 @@ async function convertCurrency() {
 
     // Make an API request to the serverless function on Vercel
     try {
+
         const endpoint = `https://dreadfultech.com/api/convert?from_currency=${from_currency}&to_currency=${to_currency}&amount=${amount}`;
         const response = await fetch(endpoint);
         const data = await response.json();

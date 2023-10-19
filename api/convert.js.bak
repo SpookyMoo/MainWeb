@@ -1,12 +1,12 @@
 const fetch = require('node-fetch');
 
-exports.handler = async function(event, context) {
+module.exports = async (req, res) => {
     try {
-        const { from_currency, to_currency, amount } = event.queryStringParameters;
+        const { from_currency, to_currency, amount } = req.query;
 
         // New API key and endpoint
         const apiKey = 'CG-pdiRXN42KbFSkwxqQyekSDxa';
-        const endpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${from_currency},${to_currency}&key=${apiKey}`;
+        const endpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${from_currency},${to_currency}&x_cg_demo_api_key=${apiKey}`;
 
         const response = await fetch(endpoint);
         const data = await response.json();
@@ -18,20 +18,11 @@ exports.handler = async function(event, context) {
             // Calculate the conversion
             const convertedAmount = (amount / rate_from) * rate_to;
 
-            return {
-                statusCode: 200,
-                body: JSON.stringify({ convertedAmount: convertedAmount.toFixed(2) })
-            };
+            res.status(200).send({ convertedAmount: convertedAmount.toFixed(2) });
         } else {
-            return {
-                statusCode: 500,
-                body: JSON.stringify({ error: "Currency pair not found in the response." })
-            };
+            res.status(500).send({ error: "Currency pair not found in the response." });
         }
     } catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: "Server error." })
-        };
+        res.status(500).send({ error: "Server error." });
     }
 };
