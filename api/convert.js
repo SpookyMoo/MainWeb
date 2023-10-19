@@ -5,7 +5,7 @@ exports.handler = async function(event, context) {
         const { from_currency, to_currency, amount } = event.queryStringParameters;
 
         // Fetching conversion rates without the amount
-        const endpoint = `http://api.coinlayer.com/live?access_key=USDBTC&from=${from_currency}&to=${to_currency}`;
+        const endpoint = `http://api.coinlayer.com/live?access_key=${process.env.USDBTC}&from=${from_currency}&to=${to_currency}`;
         const response = await fetch(endpoint);
         const data = await response.json();
 
