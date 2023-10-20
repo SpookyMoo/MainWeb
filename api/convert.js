@@ -34,19 +34,15 @@ export default async (req, res) => {
             throw new Error("Currency pair not found in the combined rates");
         }
 
-       let convertedAmount;
-// Crypto to Fiat conversion
-if (cryptoCurrencies.includes(Cash) && !cryptoCurrencies.includes(toCash)) {
-    convertedAmount = amount * rate_From;
-}
-// Fiat to Crypto conversion
-else if (!cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
-    convertedAmount = amount / rate_To;
-}
-// Either both are crypto or both are fiat
-else {
-    convertedAmount = amount * (rate_To / rate_From);
-}
+        let convertedAmount;
+        // If both are crypto
+        if (cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
+            // Convert from source crypto to USD and then to target crypto
+            convertedAmount = amount / rate_From * rate_To;
+        } else {
+            // Regular conversion
+            convertedAmount = amount * (rate_To / rate_From);
+        }
 
         console.log(`Conversion result: ${convertedAmount}`);
         res.status(200).json({ convertedAmount: convertedAmount.toFixed(2) });
