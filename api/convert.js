@@ -2,6 +2,8 @@ const fetch = require('node-fetch');
 
 export default async (req, res) => {
     try {
+        let convertedAmount;
+
         console.log("Function started");
 
         const { Cash, toCash, amount } = req.query;
