@@ -34,13 +34,15 @@ export default async (req, res) => {
             throw new Error("Currency pair not found in the combined rates");
         }
 
-        let convertedAmount;
-        // If both are crypto
-        if (cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
-            // Convert from source crypto to USD and then to target crypto
-            convertedAmount = amount / rate_From * rate_To;
+        // Determine the type of conversion
+        if (cryptoCurrencies.includes(Cash) && !cryptoCurrencies.includes(toCash)) {
+            // Crypto to Fiat
+            convertedAmount = amount * rate_From;
+        } else if (!cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
+            // Fiat to Crypto
+            convertedAmount = amount / rate_To;
         } else {
-            // Regular conversion
+            // Either Fiat to Fiat or Crypto to Crypto
             convertedAmount = amount * (rate_To / rate_From);
         }
 
