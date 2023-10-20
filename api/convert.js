@@ -2,8 +2,6 @@ const fetch = require('node-fetch');
 
 export default async (req, res) => {
     try {
-        let convertedAmount;
-
         console.log("Function started");
 
         const { Cash, toCash, amount } = req.query;
@@ -35,19 +33,20 @@ export default async (req, res) => {
         if (!rate_From || !rate_To) {
             throw new Error("Currency pair not found in the combined rates");
         }
-        
-        let convertedAmount;
-        // Determine the type of conversion
-        if (cryptoCurrencies.includes(Cash) && !cryptoCurrencies.includes(toCash)) {
-            // Crypto to Fiat
-            convertedAmount = amount * rate_From;
-        } else if (!cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
-            // Fiat to Crypto
-            convertedAmount = amount / rate_To;
-        } else {
-            // Either Fiat to Fiat or Crypto to Crypto
-            convertedAmount = amount * (rate_To / rate_From);
-        }
+
+       let convertedAmount;
+// Crypto to Fiat conversion
+if (cryptoCurrencies.includes(Cash) && !cryptoCurrencies.includes(toCash)) {
+    convertedAmount = amount * rate_From;
+}
+// Fiat to Crypto conversion
+else if (!cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
+    convertedAmount = amount / rate_To;
+}
+// Either both are crypto or both are fiat
+else {
+    convertedAmount = amount * (rate_To / rate_From);
+}
 
         console.log(`Conversion result: ${convertedAmount}`);
         res.status(200).json({ convertedAmount: convertedAmount.toFixed(2) });
