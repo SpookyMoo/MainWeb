@@ -6,6 +6,7 @@ async function convertCurrency() {
 
     // Construct the endpoint URL with the provided values
     const endpoint = `https://dreadfultech.com/api/convert?Cash=${Cash}&toCash=${toCash}&amount=${amount}`;
+	
 
     try {
         // Make the API request

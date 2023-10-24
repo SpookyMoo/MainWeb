@@ -41,6 +41,7 @@
 <!-- Display the conversion result -->
 <div>
     <p id="result">Conversion result will appear here.</p>
+	<input type="text" id="apiData" readonly>
 </div>
 
 <!-- Include the JavaScript -->
