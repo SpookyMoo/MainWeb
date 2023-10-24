@@ -4,8 +4,8 @@ export default async (req, res) => {
     try {
         console.log("Function started");
 
-        const { fiatFrom, cryptoFrom, fiatTo, cryptoTo, amount } = req.query;
-        console.log(`Parameters received: fiatFrom=${fiatFrom}, cryptoFrom=${cryptoFrom}, fiatTo=${fiatTo}, cryptoTo=${cryptoTo}, amount=${amount}`);
+        const { Cash, toCash, amount } = req.query;
+        console.log(`Parameters received: Cash=${Cash}, toCash=${toCash}, amount=${amount}`);
 
         const fiatEndpoint = `https://api.exchangerate-api.com/v4/latest/USD`;
         console.log(`Fetching fiat rates from: ${fiatEndpoint}`);
@@ -27,8 +27,8 @@ export default async (req, res) => {
 
         const cryptoCurrencies = cryptoData.map(coin => coin.symbol.toLowerCase());
 
-        let rate_From = combinedRates[fiatFrom || cryptoFrom];
-        let rate_To = combinedRates[fiatTo || cryptoTo];
+        let rate_From = combinedRates[Cash];
+        let rate_To = combinedRates[toCash];
 
         if (!rate_From || !rate_To) {
             throw new Error("Currency pair not found in the combined rates");
@@ -36,7 +36,7 @@ export default async (req, res) => {
 
         let convertedAmount;
         // If both are crypto
-        if (cryptoCurrencies.includes(fiatFrom || cryptoFrom) && cryptoCurrencies.includes(fiatTo || cryptoTo)) {
+        if (cryptoCurrencies.includes(Cash) && cryptoCurrencies.includes(toCash)) {
             // Convert from source crypto to USD and then to target crypto
             convertedAmount = amount / rate_From * rate_To;
         } else {
