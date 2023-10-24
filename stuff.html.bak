@@ -21,26 +21,12 @@
         <option value="USD">USD</option>
         <option value="ARS">ARS</option>
         <option value="IDR">IDR</option>
+		<option value="btc">BTC</option>
+        <option value="ltc">LTC</option>
+        <option value="xmr">XMR</option>
     </select>
 
     <select id="toCash">
-        <option value="USD">USD</option>
-        <option value="ARS">ARS</option>
-        <option value="IDR">IDR</option>
-    </select>
-    
-    <button onclick="convertCurrency()">Convert</button>
-</div>
-<div>
-    $ <input type="number" id="amount" placeholder="Amount">
-    
-    <select id="Cash2">
-        <option value="USD">USD</option>
-        <option value="ARS">ARS</option>
-        <option value="IDR">IDR</option>
-    </select>
-
-    <select id="toCash2">
         <option value="USD">USD</option>
         <option value="ARS">ARS</option>
         <option value="IDR">IDR</option>
@@ -49,15 +35,14 @@
         <option value="xmr">XMR</option>
     </select>
     
-    <button onclick="convertCurrency2()">Convert</button>
+    <button onclick="convertCurrency()">Convert</button>
 </div>
+
 <!-- Display the conversion result -->
 <div>
     <p id="result">Conversion result will appear here.</p>
 </div>
-<div>
-    <p id="result2">Conversion result will appear here.</p>
-</div>
+
 <!-- Include the JavaScript -->
 <script src="script.js"></script>
 <footer><br>
