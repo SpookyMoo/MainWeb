@@ -36,7 +36,14 @@ export default async (req, res) => {
 
         console.log(`Conversion result: ${convertedAmount}`);
         res.status(200).json({ convertedAmount: convertedAmount.toFixed(2) });
+		let htmlResponse = `<h2>Rates</h2>`;
+        htmlResponse += `<p>USD rate (from fiat API): ${fiatData.rates['USD']}</p>`;
+        htmlResponse += `<p>LTC rate (from crypto API): ${cryptoData['LTC'] && cryptoData['LTC']['USD']}</p>`;
+        htmlResponse += `<h2>Conversion Result</h2>`;
+        htmlResponse += `<p>${amount} ${Cash} is equal to ${convertedAmount.toFixed(2)} ${toCash}</p>`;
 
+        // Send the constructed HTML as the response
+        res.status(200).send(htmlResponse);
     } catch (error) {
         console.log(`Error encountered: ${error.message}`);
         res.status(500).json({ error: "Server error." });
