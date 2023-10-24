@@ -13,15 +13,15 @@ export default async (req, res) => {
         const fiatData = await fiatResponse.json();
         console.log(`Fiat rates received:`, fiatData);
 
-        const cryptoEndpoint = `https://api.coingate.com/v2/rates`;
+        const cryptoEndpoint = `https://api.coingate.com/v2/rates/traderYOUR_NEW_API_ENDPOINT_HERE`;  // Replace with your new API endpoint
         console.log(`Fetching crypto rates from: ${cryptoEndpoint}`);
         const cryptoResponse = await fetch(cryptoEndpoint);
         const cryptoData = await cryptoResponse.json();
         console.log(`Crypto rates received:`, cryptoData);
 
         const combinedRates = { ...fiatData.rates };
-        cryptoData.forEach(coin => {
-            combinedRates[coin.symbol.toLowerCase()] = coin.current_price;
+        Object.keys(cryptoData).forEach(coin => {
+            combinedRates[coin] = parseFloat(cryptoData[coin] && cryptoData[coin]['USD']);
         });
         console.log(`Combined rates:`, combinedRates);
 
@@ -32,7 +32,6 @@ export default async (req, res) => {
             throw new Error("Currency pair not found in the combined rates");
         }
 
-        // Universal conversion formula
         const convertedAmount = amount * (rate_To / rate_From);
 
         console.log(`Conversion result: ${convertedAmount}`);
