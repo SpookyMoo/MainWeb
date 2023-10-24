@@ -1,51 +1,31 @@
 <!DOCTYPE html>
+
 <head>
 <title>Spooky's Bunker | About</title>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#cd2682">
-<meta name="description" content="About me.">
-<link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml">
-<link href="main.css" rel="stylesheet">
-<link href="about.css" rel="stylesheet">
-<link rel="canonical" href="https://dreadfultech.com/about">
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#cd2682" name="theme-color"/>
+<meta content="About me." name="description"/>
+<link href="favicon.svg" rel="icon" sizes="any" type="image/svg+xml"/>
+<link href="main.css" rel="stylesheet"/>
+<link href="about.css" rel="stylesheet"/>
+<link href="https://dreadfultech.com/about" rel="canonical"/>
 </head>
 <body>
-
 <!-- Input fields for currency conversion -->
 <div>
-    $ <input type="number" id="amount" placeholder="Amount">
-    
-    <select id="Cash">
-        <option value="USD">USD</option>
-        <option value="ARS">ARS</option>
-        <option value="IDR">IDR</option>
-		<option value="btc">BTC</option>
-        <option value="ltc">LTC</option>
-        <option value="xmr">XMR</option>
-    </select>
-
-    <select id="toCash">
-        <option value="USD">USD</option>
-        <option value="ARS">ARS</option>
-        <option value="IDR">IDR</option>
-		<option value="btc">BTC</option>
-        <option value="ltc">LTC</option>
-        <option value="xmr">XMR</option>
-    </select>
-    
-    <button onclick="convertCurrency()">Convert</button>
+    $ <input id="amount" placeholder="Amount" type="number"/>
+<select id="fiatFrom"><option value="USD">USD</option><option value="ARS">ARS</option><option value="IDR">IDR</option></select><select id="cryptoFrom"><option value="btc">BTC</option><option value="ltc">LTC</option><option value="xmr">XMR</option></select>
+<select id="fiatTo"><option value="USD">USD</option><option value="ARS">ARS</option><option value="IDR">IDR</option></select><select id="cryptoTo"><option value="btc">BTC</option><option value="ltc">LTC</option><option value="xmr">XMR</option></select>
+<button onclick="convertCurrency()">Convert</button>
 </div>
-
 <!-- Display the conversion result -->
 <div>
-    <p id="result">Conversion result will appear here.</p>
+<p id="result">Conversion result will appear here.</p>
 </div>
-
 <!-- Include the JavaScript -->
 <script src="script.js"></script>
-<footer><br>
+<footer><br/>
   2023—2023 Moo &lt;<a href="mailto:me@arav.su">me@dreadfultech.com</a>&gt; <a href="https://dreadfultech.com/privacy">Privacy statements</a></footer>
 </body>
-</html>
