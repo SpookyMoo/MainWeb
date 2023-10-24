@@ -21,18 +21,18 @@
         <option value="USD">USD</option>
         <option value="ARS">ARS</option>
         <option value="IDR">IDR</option>
-		<option value="btc">BTC</option>
-        <option value="ltc">LTC</option>
-        <option value="xmr">XMR</option>
+		<option value="BTC">BTC</option>
+        <option value="LTC">LTC</option>
+        <option value="XMR">XMR</option>
     </select>
 
     <select id="toCash">
         <option value="USD">USD</option>
         <option value="ARS">ARS</option>
         <option value="IDR">IDR</option>
-		<option value="btc">BTC</option>
-        <option value="ltc">LTC</option>
-        <option value="xmr">XMR</option>
+		<option value="BTC">BTC</option>
+        <option value="LTC">LTC</option>
+        <option value="XMR">XMR</option>
     </select>
     
     <button onclick="convertCurrency()">Convert</button>
@@ -44,7 +44,8 @@
 </div>
 
 <!-- Include the JavaScript -->
-<script src="script.js"></script>
+<script src="/api/convert.js"></script>
+
 <footer><br>
   2023—2023 Moo &lt;<a href="mailto:me@arav.su">me@dreadfultech.com</a>&gt; <a href="https://dreadfultech.com/privacy">Privacy statements</a></footer>
 </body>
