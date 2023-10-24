@@ -16,8 +16,12 @@ async function convertCurrency() {
         if (data && data.convertedAmount) {
             // Display the result
             document.getElementById("result").innerText = `${amount} ${Cash} is approximately ${data.convertedAmount} ${toCash}`;
+			document.getElementById('apiData').value += 'Fiat rates: ' + JSON.stringify(fiatData) + ' ';
+			document.getElementById('apiData').value += 'Crypto rates: ' + JSON.stringify(cryptoData) + ' ';
         } else {
             document.getElementById("result").innerText = data.error || "An error occurred.";
+			document.getElementById('apiData').value += 'Fiat rates: ' + JSON.stringify(fiatData) + ' ';
+			document.getElementById('apiData').value += 'Crypto rates: ' + JSON.stringify(cryptoData) + ' ';
         }
     } catch (error) {
         document.getElementById("result").innerText = `Error: ${error.message}`;

@@ -12,14 +12,12 @@ export default async (req, res) => {
         const fiatResponse = await fetch(fiatEndpoint);
         const fiatData = await fiatResponse.json();
         console.log(`Fiat rates received:`, fiatData);
-		document.getElementById('apiData').value += 'Fiat rates: ' + JSON.stringify(fiatData) + ' ';
 
         const cryptoEndpoint = `https://api.coingate.com/v2/rates/trader`;  // Replace with your new API endpoint
         console.log(`Fetching crypto rates from: ${cryptoEndpoint}`);
         const cryptoResponse = await fetch(cryptoEndpoint);
         const cryptoData = await cryptoResponse.json();
         console.log(`Crypto rates received:`, cryptoData);
-		document.getElementById('apiData').value += 'Crypto rates: ' + JSON.stringify(cryptoData) + ' ';
 
 		
         const combinedRates = { ...fiatData.rates };
