@@ -25,8 +25,8 @@ export default async (req, res) => {
         });
         console.log(`Combined rates:`, combinedRates);
 
-        let rate_From = combinedRates[Cash];
-        let rate_To = combinedRates[toCash];
+        let rate_From = combinedRates[Cash.toUpperCase()];
+		let rate_To = combinedRates[toCash.toUpperCase()];
 
         if (!rate_From || !rate_To) {
             throw new Error("Currency pair not found in the combined rates");
