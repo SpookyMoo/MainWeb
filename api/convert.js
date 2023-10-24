@@ -13,7 +13,7 @@ export default async (req, res) => {
         const fiatData = await fiatResponse.json();
         console.log(`Fiat rates received:`, fiatData);
 
-        const cryptoEndpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`;
+        const cryptoEndpoint = `https://blockchain.info/ticker`;
         console.log(`Fetching crypto rates from: ${cryptoEndpoint}`);
         const cryptoResponse = await fetch(cryptoEndpoint);
         const cryptoData = await cryptoResponse.json();
